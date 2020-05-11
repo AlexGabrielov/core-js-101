@@ -198,8 +198,40 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const topLeftCorner = '┌';
+  const topRightCorner = '┐';
+  const bottomLeftCorner = '└';
+  const bottomRightCorner = '┘';
+  const horizontal = '─';
+  const vertical = '│';
+  let rectangle = '';
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      if (i === 0 && j === 0) {
+        rectangle += topLeftCorner;
+      } else
+      if (i === height - 1 && j === 0) {
+        rectangle += bottomLeftCorner;
+      } else
+      if (i === 0 && j === width - 1) {
+        rectangle += topRightCorner;
+      } else
+      if (i === height - 1 && j === width - 1) {
+        rectangle += bottomRightCorner;
+      } else
+      if (i === 0 || i === height - 1) {
+        rectangle += horizontal;
+      } else
+      if (j === 0 || j === width - 1) {
+        rectangle += vertical;
+      } else rectangle += ' ';
+      if (j === width - 1) {
+        rectangle += '\n';
+      }
+    }
+  }
+  return rectangle;
 }
 
 /**
@@ -218,8 +250,11 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+  const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'.split('');
+  const string = str.split('').map((letter) => (input.indexOf(letter) === -1 ? letter : output[input.indexOf(letter)])).join('');
+  return string;
 }
 
 /**
@@ -235,8 +270,8 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return !!(value && Object.getPrototypeOf(value) === String.prototype);
 }
 
 /**
@@ -263,8 +298,62 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const deck = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return deck.indexOf(value);
 }
 
 module.exports = {
