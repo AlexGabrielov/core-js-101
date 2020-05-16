@@ -130,7 +130,7 @@ function doRectanglesOverlap(rect1, rect2) {
   const rightX = Math.min(x2, x4);
   const bottomY = Math.max(y1, y3);
   const topY = Math.min(y2, y4);
-  return (rightX < leftX && topY < bottomY);
+  return rightX < leftX && topY < bottomY;
 }
 
 /**
@@ -263,8 +263,15 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const arr = ccn.toString().split('').reverse().map(Number);
+  const sum = arr.map((e, i) => {
+    if (i % 2 === 1) {
+      return e * 2 > 9 ? e * 2 - 9 : e * 2;
+    } return e;
+  })
+    .reduce((acc, value) => acc + value, 0);
+  return sum % 10 === 0;
 }
 
 /**
@@ -282,7 +289,11 @@ function isCreditCardNumber(/* ccn */) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-  const sum = num.toString().split('').map(Number).reduce((acc, value) => acc + value, 0);
+  const sum = num
+    .toString()
+    .split('')
+    .map(Number)
+    .reduce((acc, value) => acc + value, 0);
   return sum > 9 ? getDigitalRoot(sum) : sum;
 }
 
@@ -399,8 +410,12 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = new Array(m1.length)
+    .fill(0)
+    .map(() => new Array(m2[0].length).fill(0));
+  return result.map((row, i) => row.map((val, j) => m1[i]
+    .reduce((sum, elm, k) => sum + elm * m2[k][j], 0)));
 }
 
 /**
