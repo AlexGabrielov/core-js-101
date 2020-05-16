@@ -112,8 +112,9 @@ function timeSpanToString(startDate, endDate) {
 function angleBetweenClockHands(date) {
   const hours = date.getHours() % 12;
   const minutes = date.getMinutes();
-  const res = 0.5 * (60 * hours * minutes) - 6 * minutes;
-  return res;
+  if (minutes === 0 && hours === 0) return 0;
+  const res = 0.5 * (60 * hours + minutes) - 6 * minutes;
+  return res > 180 ? 360 - res : res;
 }
 
 
